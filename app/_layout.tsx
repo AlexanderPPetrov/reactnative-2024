@@ -8,6 +8,9 @@ import { useEffect } from 'react';
 import { useColorScheme } from '@/components/useColorScheme';
 import {QueryClientProvider} from "react-query";
 import {client} from "@/react-query/client";
+import { Provider } from "react-redux";
+import store from "@/redux/store"
+import FloatingCartButton from "@/components/products/FloatingCartButton";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -50,13 +53,17 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <QueryClientProvider client={client}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        </Stack>
-      </QueryClientProvider>
-    </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <QueryClientProvider client={client}>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+            </Stack>
+            <FloatingCartButton/>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </Provider>
+
   );
 }

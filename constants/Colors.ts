@@ -1,6 +1,20 @@
 const tintColorLight = '#2f95dc';
 const tintColorDark = '#fff';
 
+export type Variant = "primary" | "secondary"
+
+type Variants = {
+  [key: string]: Variant
+}
+export const variants: Variants = {
+  PRIMARY: "primary",
+  SECONDARY: "secondary"
+}
+
+
+
+
+
 type ThemeColors = {
   [key: string]: string // Define loose object
 }

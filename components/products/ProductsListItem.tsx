@@ -3,6 +3,9 @@ import {View, Text, StyleSheet, Pressable} from "react-native";
 import Card from "@/components/Card";
 import { Image } from "expo-image"
 import {useColor} from "@/components/Themed";
+import AppButton from "@/components/ui/AppButton";
+import { useDispatch } from "react-redux";
+import { addProduct } from "@/redux/slices/product";
 
 type Props = {
     product: ProductType
@@ -10,8 +13,12 @@ type Props = {
 
 function ProductsListItem({ product } : Props) {
 
+    const dispatch = useDispatch()
+    function onAddProduct() {
+        dispatch(addProduct(product))
+    }
+
     //TODO style title and description
-    //TODO create a generic AppButton component that can be easily reused
     //TODO review forms and validations?
 
     const primaryColor = useColor("primary")
@@ -26,12 +33,16 @@ function ProductsListItem({ product } : Props) {
         </View>
         <Text>{ product.description }</Text>
         <View style={styles.buttonContainer}>
-            <Pressable style={[styles.viewDetails, {backgroundColor: secondaryColor}]}>
-                <Text style={{ textAlign: "center", color: "white" }}>View Details</Text>
-            </Pressable>
-            <Pressable style={[styles.addToCart, {backgroundColor: primaryColor}]}>
-                <Text style={{ textAlign: "center", color: "white" }}>Add to cart</Text>
-            </Pressable>
+            <AppButton
+                title={"View Details"}
+                variant="secondary"
+                onPress={()=>{}}
+            />
+            <AppButton
+                title={"Add to cart"}
+                variant="primary"
+                onPress={onAddProduct}
+            />
         </View>
     </Card>
 }
@@ -58,19 +69,5 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginHorizontal: -6,
     },
-    viewDetails: {
-        flex: 1,
-        margin: 5,
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        borderRadius: 6,
-    },
-    addToCart: {
-        flex: 1,
-        margin: 5,
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        borderRadius: 6,
-    }
 
 })
